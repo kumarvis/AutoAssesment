@@ -19,9 +19,11 @@ def tokenize_file(file_path):
     file = open(file_path, 'r')
     Lines = file.readlines()
     Lines_Processed = []
+    total_tokens = 0
     for line in Lines:
         line = preprocess(line)
         tokens = word_tokenize(line)
+        total_tokens += len(tokens)
         misspelled = spell.unknown(tokens)
         for word in misspelled:
             idx = tokens.index(word)
@@ -29,4 +31,4 @@ def tokenize_file(file_path):
             tokens[idx] = correct_word
         Lines_Processed.append(tokens)
 
-    return Lines_Processed
+    return Lines_Processed, total_tokens
