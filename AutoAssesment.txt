@@ -1,0 +1,5 @@
+Auto Assesing will be done on below params.
+
+1. Important data from ground truth data.
+2. Words used by taking care of synonyms
+3. Grammar
