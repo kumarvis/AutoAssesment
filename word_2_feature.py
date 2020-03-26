@@ -20,6 +20,7 @@ Word2Vec_GlovePath = os.path.join(Word2Vec_Base_Path, 'glove.6B/glove.6B.50d.txt
 Vectors_Db_Path = os.path.join(Word2Vec_Base_Path, 'glove.6B/6B.50.dat')
 Words_Pkl_Path = os.path.join(Word2Vec_Base_Path, 'glove.6B/6B.50_words.pkl')
 Words_Index_Pkl_Path = os.path.join(Word2Vec_Base_Path, 'glove.6B/6B.50_idx.pkl.pkl')
+Embedding_Length = 50
 
 def dump_pkl():
     words = []
@@ -52,12 +53,12 @@ def get_glove_embedings(my_word):
     glove = {w: vectors[word2idx[w]] for w in words}
 
     if my_word in glove.keys():
-        embeding = glove[my_word]
+        embedding = glove[my_word]
+        embedding= embedding.astype('float32')
     else:
-        embeding = -1
+        embedding = -1
 
-    #word2idx = {k: v for k, v in sorted(word2idx.items(), key=operator.itemgetter(1))}
-    return embeding
+    return embedding
     print('ss')
 
 #get_glove_embedings('fdf')

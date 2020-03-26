@@ -1,13 +1,6 @@
-import project_utils as pu
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import RegexpTokenizer
-from nltk.corpus import stopwords
-import re
-from spellchecker import SpellChecker
-
 import tokenize_file as tkf
 import word_2_feature as w2f
-
+import numpy as np
 
 def auto_assesment():
     file_path = 'dummy_dataset.txt'
@@ -16,9 +9,7 @@ def auto_assesment():
     for l_token in llst_token:
         for token in l_token:
             embedding = w2f.get_glove_embedings(token)
+            embedding.resize(1, w2f.Embedding_Length)
             print('ff')
-
-
-
 
 auto_assesment()
