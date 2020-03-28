@@ -12,8 +12,8 @@ import numpy as np
 
 class Auto_Assesment:
     def __init__(self):
-        self.ll_GT_Tokens = []
-        self.GT_NoTokens = None
+        #self.ll_GT_Tokens = []
+        #self.GT_NoTokens = None
         self.Test = []
         self.TokenizeObj = TokenizeFile()
         self.initialize_gt = False
@@ -39,11 +39,11 @@ class Auto_Assesment:
     def initialize(self, gt_file_path):
         if self.initialize_gt != True:
             self.load_embedding_dictionary()
-            self.ll_GT_Tokens, self.GT_NoTokens = self.tokenize_file(gt_file_path)
-            self.GT_EmbeddingMat= np.empty((w2f.Embedding_Length, self.GT_NoTokens), dtype=np.float32)
+            ll_GT_Tokens, GT_NoTokens = self.tokenize_file(gt_file_path)
+            self.GT_EmbeddingMat = np.empty((w2f.Embedding_Length, GT_NoTokens), dtype=np.float32)
 
             token_col_count = 0
-            for l_gt_tokens in self.ll_GT_Tokens:
+            for l_gt_tokens in ll_GT_Tokens:
                 print('Loading GT Embedding')
                 for token in l_gt_tokens:
                     embedding = w2f.get_glove_embedings(token)
@@ -81,25 +81,22 @@ class Auto_Assesment:
         no_tokens_test = Test_EmbeddingMat.shape[1]
         no_tokens_gt = self.GT_EmbeddingMat.shape[1]
 
-        for tt in range(no_tokens_test):
-            print(tt)
-            vT = Test_EmbeddingMat[:, tt]
+        for gg in range(no_tokens_gt):
+            vG = self.GT_EmbeddingMat[:, gg]
             max_similarity = 0
-            for gg in range(no_tokens_gt):
-                print(gg)
-                vG = self.GT_EmbeddingMat[:, gg]
+            for tt in range(no_tokens_test):
+                vT = Test_EmbeddingMat[:, tt]
                 score = self.cosine_similarity(vG, vT)
                 if score > max_similarity:
                     max_similarity = score
             total_test_score += max_similarity
-        total_test_score = total_test_score / no_tokens_test
+        total_test_score = total_test_score / no_tokens_gt
         total_test_score = self.normalize_score(total_test_score)
         return total_test_score
 
 
-
-
 gt_file_path = 'dummy_dataset.txt'
+test_file_path = 'dummy_test.txt'
 obj = Auto_Assesment()
 obj.initialize(gt_file_path)
-print('Score = ', obj.evaluate(gt_file_path))
+print('Score = ', obj.evaluate(test_file_path))

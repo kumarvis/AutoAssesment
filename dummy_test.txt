@@ -1,0 +1,3 @@
+However, as you can see in the second line of output , this method does not account for user typos.
+ had typed “grandson,am” which then became one word “grandsonam” once the comma was.
+I still think this is handy to know in case you ever need it though.
